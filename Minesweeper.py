@@ -30,3 +30,15 @@ class Minesweeper:
             if (row, col) not in self.mines:
                 self.mines.add((row, col))
                 self.board[row][col] = '*'
+
+    def _calculate_hints(self):
+        for row in range(self.size):
+            if self.board[row][col] == '*':
+                continue
+            count = sum((r, c) in self.mines
+                for r in range(row - 1, row + 2)
+                for c in range(col - 1, col + 2)
+                if 0 <= r < self.size and 0 <= c < self.size)
+            self.board[row][col] = str(count) if count > 0 else ' '
+
+    
